@@ -33,6 +33,21 @@ public class World {
 		for ( int i = 0; i < BLOCKS_TOTAL; i++) {
 			blocks.add(new Blocks(Game.WIDTH-Blocks.WIDTH, i*Blocks.WIDTH));
 		}
+		
+		blocks.add(new Blocks(80, 80));
+		blocks.add(new Blocks(96, 80));
+		blocks.add(new Blocks(110, 80));
+		blocks.add(new Blocks(126, 80));
+		
+		blocks.add(new Blocks(226, 90));
+		blocks.add(new Blocks(226, 106));
+		blocks.add(new Blocks(226, 112));
+		
+		blocks.add(new Blocks(306, 140));
+		blocks.add(new Blocks(318, 140));
+		blocks.add(new Blocks(340, 140));
+		blocks.add(new Blocks(356, 140));
+		blocks.add(new Blocks(370, 140));
 	}
 	
 	public static boolean isCollidedWith(int x, int y){

@@ -15,11 +15,6 @@ public class Blocks extends Rectangle {
 	}
 	
 	public void render(Graphics g) {
-		/*g.setColor(Color.magenta);
-		g.fillRect(x,  y, width, height);
-		
-		g.setColor(Color.black);
-		g.drawRect(x, y, width, height);*/
 		g.drawImage(Spritesheet.tileWall, x, y, WIDTH, HEIGHT, null);
 	}
 }

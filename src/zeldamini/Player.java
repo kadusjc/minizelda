@@ -19,8 +19,9 @@ public class Player extends Rectangle implements Serializable {
 	public int speed = 4;
 	public boolean right, up, down, left;
 	public boolean shoot = false;
+	public int dir = 1;
 	
-	public List<Bullet> bullets = new ArrayList<Bullet>();
+	public static List<Bullet> bullets = new ArrayList<Bullet>();
 	
 	public Player (int x, int y) {
 		super(x,y, WIDTH, HEIGHT);
@@ -28,14 +29,14 @@ public class Player extends Rectangle implements Serializable {
 	
 	public void tick() {
 		boolean isMoving = false;
-		if ( right && !World.isCollidedWith(x+speed, y)) { x+= speed; isMoving = true; }
-		else if ( left && !World.isCollidedWith(x-speed, y)) { x-= speed; isMoving = true; }
+		if ( right && !World.isCollidedWith(x+speed, y)) { x+= speed; isMoving = true; dir = 1; }
+		else if ( left && !World.isCollidedWith(x-speed, y)) { x-= speed; isMoving = true; dir = -1; }
 		else if ( up && !World.isCollidedWith(x, y-speed)) { y-= speed; isMoving = true; }
 		else if ( down && !World.isCollidedWith(x, y+speed)) {  y+= speed; isMoving = true; }
-		else if (shoot){ shoot = false; this.bullets.add(new Bullet(x,y,1)); }
+		else if (!right && !left && !up && !down && shoot) { shoot = false; bullets.add(new Bullet(x,y,dir)); }
 		
 		if (isMoving) runAnimation();
-		for(Bullet bullet : this.bullets) { bullet.tick(); }
+		for(int i = 0; i < bullets.size(); i++) { bullets.get(i).tick(); }
 	}
 
 	private void runAnimation() {
@@ -55,7 +56,7 @@ public class Player extends Rectangle implements Serializable {
 		//g.setColor(Color.blue);
 		//g.fillRect(x, y, WIDTH, HEIGHT);
 		g.drawImage(Spritesheet.playerFront[currAnimation], x, y, WIDTH, HEIGHT, null);
-		for(Bullet bullet : this.bullets) { bullet.render(g); }
+		for(int i = 0; i < bullets.size(); i++) { bullets.get(i).render(g); }
 	}
 
 }

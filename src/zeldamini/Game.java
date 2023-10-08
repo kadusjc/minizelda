@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -14,8 +16,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = -7967541290357472712L;
 	
-	public Player player;
+	public static Player player;
 	public World world;
+	public static List<Enemy> enemies = new ArrayList<Enemy>(); 
 	
 	public static final int GAME_RESOLUTION_FPS = 60;
 	public static final int WIDTH = 640;
@@ -28,6 +31,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		new Spritesheet();
 		world = new World();
 		player = new Player(32, 32);
+		enemies.add(new Enemy(200, 32));
+		enemies.add(new Enemy(263, 70));
+		enemies.add(new Enemy(269, 140));
 	}
 	
 	public static void main(String[] args) {
@@ -39,6 +45,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	
 	public void tick() {
 		player.tick();
+		for (int i = 0; i< enemies.size(); i++) { enemies.get(i).tick(); }
 	}
 	
 	public void render() {
@@ -54,6 +61,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.fillRect(0, 0, WIDTH*SCALE, HEIGHT*SCALE);
 
 		player.render(g);
+		for (int i = 0; i< enemies.size(); i++) { enemies.get(i).render(g); } ;
 		world.render(g);
 		
 		bs.show();
