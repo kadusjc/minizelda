@@ -106,6 +106,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			case KeyEvent.VK_DOWN: {
 				player.down = true;
 			}
+			case KeyEvent.VK_Z: {
+				player.shoot = true;
+			}
 		}
 	}
 
@@ -123,6 +126,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			}
 			case KeyEvent.VK_DOWN: {
 				player.down = false;
+			}
+			case KeyEvent.VK_Z: {
+				player.shoot = false;
 			}
 		}
 		

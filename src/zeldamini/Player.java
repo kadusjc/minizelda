@@ -3,6 +3,8 @@ package zeldamini;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Rectangle implements Serializable {
 
@@ -16,6 +18,9 @@ public class Player extends Rectangle implements Serializable {
 			
 	public int speed = 4;
 	public boolean right, up, down, left;
+	public boolean shoot = false;
+	
+	public List<Bullet> bullets = new ArrayList<Bullet>();
 	
 	public Player (int x, int y) {
 		super(x,y, WIDTH, HEIGHT);
@@ -27,12 +32,13 @@ public class Player extends Rectangle implements Serializable {
 		else if ( left && !World.isCollidedWith(x-speed, y)) { x-= speed; isMoving = true; }
 		else if ( up && !World.isCollidedWith(x, y-speed)) { y-= speed; isMoving = true; }
 		else if ( down && !World.isCollidedWith(x, y+speed)) {  y+= speed; isMoving = true; }
+		else if (shoot){ shoot = false; this.bullets.add(new Bullet(x,y,1)); }
 		
 		if (isMoving) runAnimation();
+		for(Bullet bullet : this.bullets) { bullet.tick(); }
 	}
 
 	private void runAnimation() {
-		System.out.println("Se Moveu");
 		currFrames++;
 		
 		if (currFrames == targetFrames) {
@@ -49,6 +55,7 @@ public class Player extends Rectangle implements Serializable {
 		//g.setColor(Color.blue);
 		//g.fillRect(x, y, WIDTH, HEIGHT);
 		g.drawImage(Spritesheet.playerFront[currAnimation], x, y, WIDTH, HEIGHT, null);
+		for(Bullet bullet : this.bullets) { bullet.render(g); }
 	}
 
 }
